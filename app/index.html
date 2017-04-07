@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="http://vjs.zencdn.net/4.12.5/video-js.css" rel="stylesheet">
+
+    <!-- If you'd like to support IE8 -->
+    <script src="http://vjs.zencdn.net/ie8/1.1.0/videojs-ie8.min.js"></script>
+
+
+        <script href="https://cdnjs.com/libraries/videojs-contrib-ads"></script>
+
+
+<script>
+    videojs.options.flash.swf = "video-js.swf";
+  </script>
+    <!-- ad markers plugin, depends from jquery -->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <link href="styles/ad-markers.css" rel="stylesheet">
+    <script src="../app/video-speed.js"></script>
+
+    <script src="../app/ad-markers.js"></script>
+    <script src="../app/videojs-transcript.js"></script>
+<script src="http://players.brightcove.net/3676484086001/8fb8f3c6-5b2b-471f-953c-56d65267ff11_default/index.min.js"></script>
+
+<script src="http://players.brightcove.net/videojs-freewheel/2/videojs-freewheel.min.js"></script>
+<script src="../app/videojs-markers.js"></script>
+
+  <script src="../app/videojs.thumbnails.js"></script>
+<script src="../app/videojs.ads.js"></script>
+
+
+  <script src="../app/vast-client.js"></script>
+  <script src="../app/videojs.vast.js"></script>
+
+
+<link href="styles/videojs.ads.css" title="Example 1" rel="stylesheet">
+    <link href="styles/popUpProblems.css" title="Example 1" rel="stylesheet">
+<link href="http://players.brightcove.net/videojs-freewheel/2/videojs-freewheel.min.css" rel="stylesheet">
+    <link href="styles/videojs.thumbnails.css" title="Example 1" rel="stylesheet">
+    <link href="styles/videojs.markers.css" title="Example 1" rel="stylesheet">
+        <link href="styles/videojs-transcript.css" title="Example 1" rel="stylesheet">
+    <link href="styles/videojs-transcript2.css" title="Example 1" rel="alternate stylesheet">
+    <link href="styles/videojs-transcript3.css" title="Example 1" rel="alternate stylesheet">
+    <link rel="stylesheet" href="styles/videojs.ima.css">
+    <script src="videojs.ima.js"></script>
+
+</head>
+
+
+<body>
+
+<video id="content_video" class="video-js vjs-default-skin"
+        controls preload="auto" width="600" height="264">
+      <source src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4" type="video/mp4" />
+    </video>
+<script src="//vjs.zencdn.net/4.5/video.js"></script>
+    <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+
+<script>
+
+    var player = videojs('content_video');
+
+var options = {
+  id: 'content_video',
+  adTagUrl: '//vjs.zencdn.net/v/oceans.mp4'
+};
+
+// This must be called before player.play() below.
+player.ima(options);
+player.ima.requestAds();
+// On mobile devices, you must call initializeAdDisplayContainer as the result
+// of a user action (e.g. button click). If you do not make this call, the SDK
+// will make it for you, but not as the result of a user action. For more info
+// see our examples, all of which are set up to work on mobile devices.
+// player.ima.initializeAdDisplayContainer();
+
+// This must be called after player.ima(...) above.
+player.play();
+</script>
+</body>
+</html>
