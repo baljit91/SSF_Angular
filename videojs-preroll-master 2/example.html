@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Video.js VAST Example</title>
+    <!-- VideoJs required styles-->
+    <link rel="stylesheet" type="text/css" href="//mailonline.github.io/videojs-vast-vpaid/demo/videojs_4/video-js.css"/>
+    <!-- VideoJs.vast.vpaid required styles-->
+    <link rel="stylesheet" type="text/css" href="//mailonline.github.io/videojs-vast-vpaid/styles/videojs.vast.vpaid.css"/>
+    <!-- DEMO required styles-->
+    <link rel="stylesheet" type="text/css" href="//mailonline.github.io/videojs-vast-vpaid/demo/styles/demo.css"/>
+    <!-- Web Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        // this is mandatory for IE8 !!!!!
+        document.createElement('video');
+        document.createElement('audio');
+        document.createElement('track');
+    </script>
+    <!-- VideoJs required scripts-->
+    <script type="text/javascript" src="//mailonline.github.io/videojs-vast-vpaid/demo/videojs_4/video.js"></script>
+    <!-- VideoJs.vast.vpaid required scripts-->
+    <script type="text/javascript" src="//mailonline.github.io/videojs-vast-vpaid/scripts/es5-shim.js"></script>
+    <script type="text/javascript" src="//mailonline.github.io/videojs-vast-vpaid/scripts/ie8fix.js"></script>
+    <script type="text/javascript" src="//mailonline.github.io/videojs-vast-vpaid/scripts/videojs_4.vast.vpaid.js"></script>
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+</head>
+<body>
+
+<div class="example-video-container">
+    <video id="vid2" class="video-js vjs-default-skin" autoplay controls preload="auto" poster="" data-setup='{}' width='710' height='500'>
+        <source src="//vjs.zencdn.net/v/oceans.mp4" type='video/mp4'>
+        <p>Video Playback Not Supported</p>
+    </video>
+</div>
+
+<script type="text/javascript">
+    console.log(returnCitySN["cip"]+','+returnCitySN["cname"]);
+    var timestamp = Math.round(new Date().getTime()/1000);
+    var vjs = videojs('vid2',{}, function () {
+        var player = this;
+        var vastPlugin = player.vastClient({
+            adTagUrl: 'http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4',
+            //adTagUrl: '//rtr.innovid.com/r1.5554946ab01d97.36996823;cb=%25%CACHEBUSTER%25%25',
+            playAdAlways: true,
+            adCancelTimeout: 60000,
+            vpaidFlashLoaderPath: 'VPAIDFlash.swf'
+        });
+        player.on('reset', function () {
+            console.log('vast-plugin enabled - ' +  vastPlugin.isEnabled() ? 'true' : 'false')
+            if (!vastPlugin.isEnabled()) {
+                vastPlugin.enable();
+            } else {
+                vastAd.disable();
+            }
+        });
+    });
+</script>
+</body>
+</html>

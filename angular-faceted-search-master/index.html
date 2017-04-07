@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>ng-faceted-search</title>
+
+	<style>
+		<!--
+			p {
+				margin: 0;
+				padding: 0;
+			}
+			.left {
+				display:      inline;
+				float:        left;
+				margin-left:  10px;
+				margin-right: 10px;
+				width:        20%;
+			}
+			.right{
+				display:      inline;
+				float:        left;
+				margin-left:  10px;
+				margin-right: 10px;
+				width:        60%;
+			}
+			.top {
+				border-bottom: thin solid rgb(218, 218, 218);
+				padding-bottom: 10px;
+			}
+			.left {
+				margin: 5px;
+			}
+			label {
+				cursor: pointer;
+			}
+			.filter {
+				margin:10px;
+				border-bottom: thin solid rgb(218, 218, 218);
+			}
+			.filter h4 {
+				margin-bottom: 5px;
+				text-transform: capitalize;
+			}
+			.clearFacet {
+				cursor: pointer;
+				padding-right: 10px;
+			}
+			.clearFacet:before {
+				color: #999;
+				content: '× ';
+			}
+			.search-input {
+				font-size: 16px;
+				padding-right: 20px;
+			}
+			.clearQuery {
+				color: #999;
+				cursor: pointer;
+				margin-left: -20px;
+			}
+			[ng\:cloak],
+			[ng-cloak],
+			[data-ng-cloak],
+			[x-ng-cloak],
+			.ng-cloak,
+			.x-ng-cloak {
+			    display: none !important;
+			}
+		-->
+	</style>
+
+</head>
+<body ng-cloak>
+
+	<div ng-controller="MainCtrl">
+
+		<div class="top">
+			Search: <input name="searchQuery" type="text" class="search-input" ng-model="query"/><a ng-if="query" class="clearQuery" ng-click="clearQuery()">&times;</a>
+		</div>
+
+		<section class="left">
+			<div ng-repeat="group in facetGroups" class="filter">
+				<h4>{{group.name}}</h4>
+				<div>
+					<div ng-repeat="facet in group.facets | orderBy:orderByValue">
+						<label><input type="checkbox" ng-model="useFacets[group.name][facet]"/>{{facet}}</label>
+						<!--<span>({{ (filteredItems | filter:query | filter:count(group.name, facet)).length }})</span>-->
+					</div>
+				</div>
+			</div>
+			<div>
+				<h4>Sort By</h4>
+				<div>
+					<label>Relevence</label>
+					<label>view count</label>
+				</div>
+				<div>
+                Sort by:
+                <select ng-model="sortExpression">
+                    <option value="Relevence">Relevence</option>
+                    <option value="view_count">view_count</option>
+                </select>
+            </div>
+			</div>
+		</section>
+
+		<section class="right">
+			<div>
+				<h2>{{(filteredItems | filter:query).length}} Item{{(filteredItems | filter:query).length !== 1 ? 's' : null}}</h2>
+
+				<p class="wrapper-facets">
+					<a ng-if="activeFacets.length" class="clearFacet" ng-click="clearAllFacets()">Clear All</a>
+					<a class="clearFacet" ng-repeat="facet in activeFacets" ng-click="clearFacet(facet)">{{facet}}</a>
+				</p>
+
+				<ul>
+					<li ng-repeat="item in filteredItems | filter:query | orderBy: mySortFunction">
+						<p><b>{{item.title}}</b></p>
+						<p>Type: {{item.instruction}}<br/>
+							cuisine_type: {{item.cuisine_type}}<br/>
+							view_count: {{item.view_count}}
+						    duration: {{item.duration}}</p>
+					</li>
+				</ul>
+				<p ng-if="!(filteredItems | filter:query).length">Sorry, no results found!</p>
+			</div>
+		</section>
+
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>

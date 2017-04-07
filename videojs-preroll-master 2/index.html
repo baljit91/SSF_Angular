@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="http://vjs.zencdn.net/5.4.6/video-js.css" rel="stylesheet">
+  <script src="http://vjs.zencdn.net/5.4.6/video.js"></script>
+  <link rel="stylesheet" href="bin/videojs.vast.vpaid.min.css">
+  <script src="bin/videojs_5.vast.vpaid.min.js"></script>
+  <script src="bin/es5-shim.js"></script>
+  <script src="bin/ie8fix.js"></script>
+
+</head>
+<body>
+<div class="wrapper">
+	<div id="video">
+		<video id="media_player" class="video-js vjs-default-skin" controls  preload="false">
+		 	<source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4" />
+		</video>
+	</div>
+</div>
+<script>
+	var videoUrl = window.location.href;
+	var player = videojs('media_player');
+	player.vastClient({
+		adTagUrl: 'http://ads.intergi.com/adrawdata/3.0/5205/1469249/0/2898/ADTECH;cors=yes',
+            playAdAlways: true,
+            adCancelTimeout: 3000,
+            adsEnabled: true,
+            vpaidFlashLoaderPath: 'http://VPAIDFlash.swf'
+	});
+    player.on('reset', function () {
+    	console.log("reset");
+	    if (!player.vast.isEnabled()) {
+	        player.vast.enable();
+	    } else {
+	        player.vast.disable();
+	    }
+	});
+	player.on("vast.contentEnd", function () {
+		console.log("content end");
+		player.vastClient({
+		    adTagUrl: 'http://ads.intergi.com/adrawdata/3.0/5205/1469249/0/2898/ADTECH;cors=yes',
+		    playAdAlways: true,
+            adCancelTimeout: 3000,
+            adsEnabled: true,
+            vpaidFlashLoaderPath: 'http://VPAIDFlash.swf'
+	    });
+	    player.trigger("vast.reset");
+	    player.trigger("vast.firstPlay");
+    });
+</script>
+
+</body>
+</html>
