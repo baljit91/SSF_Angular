@@ -16,7 +16,7 @@
                 stopButtonText: 'No',
                 stopButtonClass: '',
                 waitClass: '',
-                showMessageAfter: 1200, //in ms
+                showMessageAfter: 30000, //in ms
                 pausePlayerAfter: 10000, //in ms
                 continueButtonClickHandler: null,
                 stopButtonClickHandler: null,
